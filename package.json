@@ -1,0 +1,26 @@
+{
+  "name": "fantasizr-slack",
+  "version": "0.0.1",
+  "description": "Slash Commands Getting GOT Results From Fantasizr",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bensternthal/fantasizr-slack.git"
+  },
+  "main": "app.js",
+  "engines": {
+    "node": ">= 6.0.X",
+    "npm": ">= 1.2.x"
+  },
+  "author": "Benjamin Sternthal",
+  "license": "MPL-2.0",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "dotenv": "^4.0.0",
+    "request": "^2.81.0",
+    "slackbots": "^1.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-google": "^0.7.1"
+  }
+}
