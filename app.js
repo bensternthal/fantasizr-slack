@@ -13,16 +13,20 @@ let params = {icon_emoji: ':hodor:'};
 let fantasizrUrl = process.env.FANTASIZR_URL;
 
 // Post to slack we are starting up...
-// bot.postMessageToGroup(channel, 'hodor Has Started', params);
+bot.postMessageToChannel(channel, 'Hodor is in the house.', params);
 
 // Watch for any mentions of @hodor
-bot.on('message', function(data) {
+bot.on('message', (data) => {
     if (data.content != undefined) {
         if (data.content.includes('@hodor')) {
             let message = data.content.split('@hodor', 2);
             processCommand(message[1].trim());
         };
     }
+});
+
+bot.on('error', (data) => {
+    console.log(data);
 });
 
 function processCommand(command) {
@@ -33,6 +37,7 @@ function processCommand(command) {
         case 'standings':
             botStandings();
             break;
+        // soon
         case 'stats':
             botStats();
             break;
@@ -42,14 +47,17 @@ function processCommand(command) {
 };
 
 function botHelp() {
-    let msg = 'Commands are "help", "standings"';
-    bot.postMessageToGroup(channel, msg, params);
+    let msg = 'Hodor helps! Commands are "help", "standings"';
+    bot.postMessageToChannel(channel, msg, params);
 };
 
 function botStandings() {
+    let msg = 'Hodor is thinking... ';
+    bot.postMessageToChannel(channel, msg, params);
+
     request(fantasizrUrl, function(error, response, body) {
         if (error) {
-            bot.postMessageToGroup(channel, error, params);
+            bot.postMessageToChannel(channel, error, params);
         } else {
             /* Parse Body & Store Title */
             let $ = cheerio.load(body);
@@ -60,7 +68,7 @@ function botStandings() {
             });
 
             // console.log(msg);
-            bot.postMessageToGroup(channel, msg, params);
+            bot.postMessageToChannel(channel, msg, params);
         }
     });
 };
