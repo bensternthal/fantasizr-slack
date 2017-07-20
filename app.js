@@ -10,7 +10,7 @@ let bot = new SlackBot({
 });
 let channel = process.env.SLACK_CHANNEL;
 let params = {icon_emoji: ':hodor:'};
-let fantasizrUrl = process.env.FANTASIZR_URL;
+const FantasizrID = process.env.FANTASIZR_ID;
 
 // Post to slack we are starting up...
 bot.postMessageToChannel(channel, 'Hodor is in the house.', params);
@@ -19,8 +19,9 @@ bot.postMessageToChannel(channel, 'Hodor is in the house.', params);
 bot.on('message', (data) => {
     if (data.content != undefined) {
         if (data.content.includes('@hodor')) {
-            let message = data.content.split('@hodor', 2);
-            processCommand(message[1].trim());
+            // let message = data.content.split('@hodor', 2);
+            let action = parseContent(data.content);
+            processAction(action);
         };
     }
 });
@@ -29,33 +30,39 @@ bot.on('error', (data) => {
     console.log(data);
 });
 
-function processCommand(command) {
-    switch (command) {
+/* All the things hodor can do! */
+function processAction(action) {
+    switch (action.command) {
         case 'help':
-            botHelp();
+            displayHelp();
             break;
         case 'standings':
-            botStandings();
+            getStandings();
             break;
         // soon
+        case 'whothefuckis':
+            whoTheFuckis(action.arg);
+            break;
         case 'stats':
-            botStats();
+            getCharacterStats(action.arg);
             break;
         default:
-            botHelp();
+            displayHelp();
   };
 };
 
-function botHelp() {
-    let msg = 'Hodor helps! Commands are "help", "standings"';
+function displayHelp() {
+    let msg = 'Hodor Help: Commands are "help", "standings", "stats <charactername>", "whothefuckis <charactername>",';
     bot.postMessageToChannel(channel, msg, params);
 };
 
-function botStandings() {
+/* Fetches the current standings */
+function getStandings() {
     let msg = 'Hodor is thinking... ';
+    let URL = 'http://www.fantasizr.com/league/' + FantasizrID;
     bot.postMessageToChannel(channel, msg, params);
 
-    request(fantasizrUrl, function(error, response, body) {
+    request(URL, function(error, response, body) {
         if (error) {
             bot.postMessageToChannel(channel, error, params);
         } else {
@@ -73,22 +80,50 @@ function botStandings() {
     });
 };
 
-// function botStats() {
-//     request(fantasizrUrl, function(error, response, body) {
-//         if (error) {
-//             bot.postMessageToGroup(channel, error, params);
-//         } else {
-//             /* Parse Body & Store Title */
-//             let $ = cheerio.load(body);
-//             let msg = '';
-//     
-//             $('#statdetail table.table-striped tr').each(function(i, elem) {
-//                 msg += $(this).children('td').text() + '\n';
-//             });
-//     
-//             // console.log(msg);
-//             bot.postMessageToGroup(channel, msg, params);
-//         }
-//     });
-// };
+/* Given a name returns matches/descriptions of a character */
+function whoTheFuckis(arg) {
+    // bot.postMessageToChannel(channel, msg, params);
+    let URL = 'http://www.fantasizr.com/get_player_info_table?league=' + FantasizrID;
 
+    request(URL, function(error, response, body) {
+        if (error) {
+            bot.postMessageToChannel(channel, error, params);
+        } else {
+            /* Parse Body & Store Title */
+            let $ = cheerio.load(body);
+            let msg = '';
+            let results = $('a:contains("'+arg+'")').parents('tr');
+
+            if (results.length != 0) {
+                $(results).each(function(i, elem) {
+                    msg += ($(this).text() + '\n\n');
+                });
+                bot.postMessageToChannel(channel, msg, params);
+            } else {
+                bot.postMessageToChannel(channel, 'No results. Names are case sensitive.', params);
+            }
+        }
+    });
+};
+
+/* Given a name returns matches/stats of a character */
+function getCharacterStats() {
+    // http://www.fantasizr.com/getseasonstats?league=6629648014245888
+};
+
+/* [ 'booboobenny:', '@hodor', 'command', 'arg' ] */
+function parseContent(msgContent) {
+    msgContent.trim();
+    let contents = msgContent.split(' ');
+    return {
+        'command': contents[2],
+        'arg': contents[3],
+    };
+};
+
+// use this if you want to test output without connecting to slack.
+// function testOutput() {
+//     let msg = "@hodor help"
+// };
+// 
+// testOutput();
