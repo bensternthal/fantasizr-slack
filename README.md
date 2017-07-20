@@ -2,8 +2,7 @@
 
 ![Hodor](/hodor.png)
 
-**Hodor** is a simple slack bot to display various stats from the website fantasizr in a slack
-channel. http://www.fantasizr.com
+**Hodor** is a simple slack bot to display various stats from the website fantasizr. http://www.fantasizr.com
 
 
 ## Install
@@ -15,7 +14,7 @@ channel. http://www.fantasizr.com
 
 ## Usage
 
-Hodor is not very smart but will respond to some basic commands. All commands are invoked by mentioning
+Hodor is not very smart, but will respond to some basic commands. All commands are invoked by mentioning
 his name `@hodor`. Hodor is case sensitive. Hodor is a sensitive man.
 
 1. `@hodor help`
