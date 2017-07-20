@@ -109,6 +109,7 @@ function whoTheFuckis(arg) {
 /* Given a name returns matches/stats of a character */
 function getCharacterStats() {
     // http://www.fantasizr.com/getseasonstats?league=6629648014245888
+    bot.postMessageToChannel(channel, 'Not implemented yet, Hodor has management duties.', params);
 };
 
 /* [ 'booboobenny:', '@hodor', 'command', 'arg' ] */
@@ -120,10 +121,3 @@ function parseContent(msgContent) {
         'arg': contents[3],
     };
 };
-
-// use this if you want to test output without connecting to slack.
-// function testOutput() {
-//     let msg = "@hodor help"
-// };
-// 
-// testOutput();
