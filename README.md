@@ -1,8 +1,25 @@
 ## About
 
-Outputs GOT stats to slack.
+![Hodor](/hodor.png)
+
+**Hodor** is a simple slack bot to display various stats from the website fantasizr in a slack
+channel. http://www.fantasizr.com
+
+
+## Install
+
+1. `npm install`
+1. Copy `env.dist` to `.env`
+1. Populate `.env` with the correct values.
+	1. `FANTASIZR_ID` is the number at the end of your url `http://www.fantasizr.com/league/{id}}`
 
 ## Usage
 
-1. 
+Hodor is not very smart but will respond to some basic commands. All commands are invoked by mentioning
+his name `@hodor`. Hodor is case sensitive. Hodor is a sensitive man.
+
+1. `@hodor help`
+1. `@hodor standings`
+1. `@hodor stats <Character Name>`
+1. `@hodor whothefuckis <Character Name>`
 
