@@ -66,7 +66,6 @@ function getStandings() {
         if (error) {
             bot.postMessageToChannel(channel, error, params);
         } else {
-            /* Parse Body & Store Title */
             let $ = cheerio.load(body);
             let msg = '';
 
@@ -89,7 +88,6 @@ function whoTheFuckis(arg) {
         if (error) {
             bot.postMessageToChannel(channel, error, params);
         } else {
-            /* Parse Body & Store Title */
             let $ = cheerio.load(body);
             let msg = '';
             let results = $('a:contains("'+arg+'")').parents('tr');
@@ -107,9 +105,37 @@ function whoTheFuckis(arg) {
 };
 
 /* Given a name returns matches/stats of a character */
-function getCharacterStats() {
-    // http://www.fantasizr.com/getseasonstats?league=6629648014245888
-    bot.postMessageToChannel(channel, 'Not implemented yet, Hodor has management duties.', params);
+/* http://www.fantasizr.com/getseasonstats?league= */
+/* Name  	Violence   	Sex/Nudity   	Wits   	Status   	Food   	Total */
+function getCharacterStats(arg) {
+    let URL = 'http://www.fantasizr.com/getseasonstats?league=' + FantasizrID;
+
+    request(URL, function(error, response, body) {
+        if (error) {
+            bot.postMessageToChannel(channel, error, params);
+        } else {
+            // add table to response so it can be traverssed
+            body = '<table>' + body + '</table>';
+            let $ = cheerio.load(body);
+            let msg = '';
+            let results = $('a:contains("'+arg+'")').parents('tr');
+
+            if (results.length != 0) {
+                $(results).each(function(i, elem) {
+                    msg += 'Name: ' + $(elem).children('td').eq(0).text() + '\n';
+                    msg += 'Violence: ' + $(elem).children('td').eq(1).text() + '\n';
+                    msg += 'Sex/Nudity: '+ $(elem).children('td').eq(2).text() + '\n';
+                    msg += 'Wits: ' + $(elem).children('td').eq(3).text() + '\n';
+                    msg += 'Status: ' + $(elem).children('td').eq(4).text() + '\n';
+                    msg += 'Food: ' + $(elem).children('td').eq(5).text() + '\n';
+                    msg += 'Total: ' + $(elem).children('td').eq(6).text() + '\n\n';
+                });
+                bot.postMessageToChannel(channel, msg, params);
+            } else {
+                bot.postMessageToChannel(channel, 'No results. Names are case sensitive.', params);
+            }
+        }
+    });
 };
 
 /* [ 'booboobenny:', '@hodor', 'command', 'arg' ] */
