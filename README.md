@@ -11,6 +11,7 @@
 1. Copy `env.dist` to `.env`
 1. Populate `.env` with the correct values.
 	1. `FANTASIZR_ID` is the number at the end of your url `http://www.fantasizr.com/league/{id}}`
+1. Run with ```node app.js``` or for _production_ use pm2 or similar.
 
 ## Usage
 
