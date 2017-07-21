@@ -13,7 +13,7 @@ let params = {icon_emoji: ':hodor:'};
 const FantasizrID = process.env.FANTASIZR_ID;
 
 // Post to slack we are starting up...
-bot.postMessageToChannel(channel, 'Hodor is in the house.', params);
+//bot.postMessageToChannel(channel, 'Hodor is in the house.', params);
 
 // Watch for any mentions of @hodor
 bot.on('message', (data) => {
@@ -52,13 +52,13 @@ function processAction(action) {
 };
 
 function displayHelp() {
-    let msg = 'Hodor Help: Commands are "help", "standings", "stats <charactername>", "whothefuckis <charactername>",';
+    let msg = 'Hodor: ```Commands are "help", "standings", "stats <charactername>", "whothefuckis <charactername>"```';
     bot.postMessageToChannel(channel, msg, params);
 };
 
 /* Fetches the current standings */
 function getStandings() {
-    let msg = 'Hodor is thinking... ';
+    let msg = '_Hodor is thinking..._';
     let URL = 'http://www.fantasizr.com/league/' + FantasizrID;
     bot.postMessageToChannel(channel, msg, params);
 
@@ -94,11 +94,12 @@ function whoTheFuckis(arg) {
 
             if (results.length != 0) {
                 $(results).each(function(i, elem) {
-                    msg += ($(this).text() + '\n\n');
+                    msg += '*' + $(elem).children('td').eq(0).text() + '*\n';
+                    msg += $(elem).children('td').eq(1).text() + '\n';
                 });
                 bot.postMessageToChannel(channel, msg, params);
             } else {
-                bot.postMessageToChannel(channel, 'No results. Names are case sensitive.', params);
+                bot.postMessageToChannel(channel, '_No results. Hodor is case sensitive._', params);
             }
         }
     });
@@ -122,17 +123,17 @@ function getCharacterStats(arg) {
 
             if (results.length != 0) {
                 $(results).each(function(i, elem) {
-                    msg += 'Name: ' + $(elem).children('td').eq(0).text() + '\n';
-                    msg += 'Violence: ' + $(elem).children('td').eq(1).text() + '\n';
-                    msg += 'Sex/Nudity: '+ $(elem).children('td').eq(2).text() + '\n';
-                    msg += 'Wits: ' + $(elem).children('td').eq(3).text() + '\n';
-                    msg += 'Status: ' + $(elem).children('td').eq(4).text() + '\n';
-                    msg += 'Food: ' + $(elem).children('td').eq(5).text() + '\n';
-                    msg += 'Total: ' + $(elem).children('td').eq(6).text() + '\n\n';
+                    msg += '*Name*: ' + $(elem).children('td').eq(0).text() + '\n';
+                    msg += '*Violence:* ' + $(elem).children('td').eq(1).text() + '\n';
+                    msg += '*Sex/Nudity:* '+ $(elem).children('td').eq(2).text() + '\n';
+                    msg += '*Wits:* ' + $(elem).children('td').eq(3).text() + '\n';
+                    msg += '*Status:* ' + $(elem).children('td').eq(4).text() + '\n';
+                    msg += '*Food:* ' + $(elem).children('td').eq(5).text() + '\n';
+                    msg += '*Total:* ' + $(elem).children('td').eq(6).text() + '\n\n';
                 });
                 bot.postMessageToChannel(channel, msg, params);
             } else {
-                bot.postMessageToChannel(channel, 'No results. Names are case sensitive.', params);
+                bot.postMessageToChannel(channel, '_No results. Hodor is case sensitive._', params);
             }
         }
     });
