@@ -2,6 +2,7 @@ require('dotenv').config();
 const cheerio = require('cheerio');
 const request = require('request');
 const SlackBot = require('slackbots');
+const lastwords = require('./data/lastwords.json');
 
 // Create & Configure Slackbot
 let bot = new SlackBot({
@@ -12,14 +13,10 @@ let channel = process.env.SLACK_CHANNEL;
 let params = {icon_emoji: ':hodor:'};
 const FantasizrID = process.env.FANTASIZR_ID;
 
-// Post to slack we are starting up...
-//bot.postMessageToChannel(channel, 'Hodor is in the house.', params);
-
 // Watch for any mentions of @hodor
 bot.on('message', (data) => {
     if (data.content != undefined) {
         if (data.content.includes('@hodor')) {
-            // let message = data.content.split('@hodor', 2);
             let action = parseContent(data.content);
             processAction(action);
         };
@@ -46,13 +43,21 @@ function processAction(action) {
         case 'stats':
             getCharacterStats(action.arg);
             break;
+        case 'lastwords':
+            getLastWords();
+            break;
         default:
             displayHelp();
   };
 };
 
 function displayHelp() {
-    let msg = 'Hodor: ```Commands are "help", "standings", "stats <charactername>", "whothefuckis <charactername>"```';
+    let msg = 'Hodor Commands:' +
+        '```help\n' +
+        'lastwords\n' +
+        'standings\n' +
+        'stats <charactername>\n' +
+        'whothefuckis <charactername>```\n';
     bot.postMessageToChannel(channel, msg, params);
 };
 
@@ -138,6 +143,20 @@ function getCharacterStats(arg) {
         }
     });
 };
+
+/* Outputs random "last words" */
+function getLastWords() {
+    let numquotes = lastwords.length;
+    let diceRoll = Math.floor(Math.random() * (numquotes - 0)) + 0;
+    let msg = '';
+
+    msg += '_"' + lastwords[diceRoll].quote + '"_'+ '\n';
+    msg += '*' + lastwords[diceRoll].who + ' in ' + lastwords[diceRoll].source + '*\n';
+    msg += lastwords[diceRoll].note + '\n';
+
+    bot.postMessageToChannel(channel, msg, params);
+}
+
 
 /* [ 'booboobenny:', '@hodor', 'command', 'arg' ] */
 function parseContent(msgContent) {
