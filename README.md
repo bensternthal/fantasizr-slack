@@ -19,6 +19,7 @@ Hodor is not very smart, but will respond to some basic commands. All commands a
 his name `@hodor`. Hodor is case sensitive. Hodor is a sensitive man.
 
 1. `@hodor help`
+1. `@hodor lastwords`
 1. `@hodor standings`
 1. `@hodor stats <Character Name>`
 1. `@hodor whothefuckis <Character Name>`
