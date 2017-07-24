@@ -16,7 +16,7 @@ const FantasizrID = process.env.FANTASIZR_ID;
 // Watch for any mentions of @hodor
 bot.on('message', (data) => {
     if (data.content != undefined) {
-        if (data.content.includes('@hodor')) {
+        if (data.content.includes(`@${process.env.SLACK_BOT_NAME}`)) {
             let action = parseContent(data.content);
             processAction(action);
         };
@@ -37,6 +37,9 @@ function processAction(action) {
             getStandings();
             break;
         // soon
+        case 'whoison':
+            getTeamRoster(action.arg);
+            break;
         case 'whothefuckis':
             whoTheFuckis(action.arg);
             break;
@@ -57,6 +60,7 @@ function displayHelp() {
         'lastwords\n' +
         'standings\n' +
         'stats <charactername>\n' +
+        'whoison <team name>\n' +
         'whothefuckis <charactername>```\n';
     bot.postMessageToChannel(channel, msg, params);
 };
@@ -79,6 +83,52 @@ function getStandings() {
             });
 
             // console.log(msg);
+            bot.postMessageToChannel(channel, msg, params);
+        }
+    });
+};
+
+/* Fetches the roster for a given team */
+function getTeamRoster(arg) {
+    let msg = '_Hodor is thinking..._';
+    let URL = 'http://www.fantasizr.com/league/' + FantasizrID;
+    bot.postMessageToChannel(channel, msg, params);
+
+    request(URL, function(error, response, body) {
+        if (error) {
+            bot.postMessageToChannel(channel, error, params);
+        } else {
+            let $ = cheerio.load(body);
+            let found = false;
+            $('#home a.teamlink').each(function(i, elem) {
+                let name = $(this).attr('name');
+                let id = $(this).attr('id');
+                if (name.includes(arg)) {
+                    postTeamRoster(id, name);
+                    found = true;
+                }
+            });
+            if (!found) {
+              let msg = 'Couldn\'t find team \'' + arg +'\'';
+              bot.postMessageToChannel(channel, msg, params);
+            }
+        }
+    });
+};
+
+/* Helper for getTeamRoster - given a team id, posts the roster */
+function postTeamRoster(id, name) {
+    let URL = 'http://www.fantasizr.com/getteammodal?league=' + FantasizrID;
+    URL += '&team=' + id;
+    request(URL, function(error, response, body) {
+        if (error) {
+            bot.postMessageToChannel(channel, error, params);
+        } else {
+            let $ = cheerio.load(body);
+            let msg = 'Team \'' + name + '\' has:\n';
+            $('tr.season_stats_row > td:first-child').each(function(i, elem) {
+              msg += $(this).text() + '\n';
+            });
             bot.postMessageToChannel(channel, msg, params);
         }
     });
