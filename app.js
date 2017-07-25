@@ -36,7 +36,6 @@ function processAction(action) {
         case 'standings':
             getStandings();
             break;
-        // soon
         case 'whoison':
             getTeamRoster(action.arg);
             break;
@@ -125,7 +124,7 @@ function postTeamRoster(id, name) {
             bot.postMessageToChannel(channel, error, params);
         } else {
             let $ = cheerio.load(body);
-            let msg = 'Team \'' + name + '\' has:\n';
+            let msg = '*Team \'' + name + '\' has:*\n';
             $('tr.season_stats_row > td:first-child').each(function(i, elem) {
               msg += $(this).text() + '\n';
             });
