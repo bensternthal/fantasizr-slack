@@ -22,6 +22,7 @@ his name `@hodor`. Hodor is case sensitive. Hodor is a sensitive man.
 1. `@hodor lastwords`
 1. `@hodor standings`
 1. `@hodor whoison <team name>`
+1. `@hodor whohas <Character Name>`
 1. `@hodor stats <Character Name>`
 1. `@hodor whothefuckis <Character Name>`
 
