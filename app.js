@@ -42,6 +42,9 @@ function processAction(action) {
         case 'whothefuckis':
             whoTheFuckis(action.arg);
             break;
+        case 'whohas':
+            whoHas(action.arg);
+            break;
         case 'stats':
             getCharacterStats(action.arg);
             break;
@@ -60,6 +63,7 @@ function displayHelp() {
         'standings\n' +
         'stats <charactername>\n' +
         'whoison <team name>\n' +
+        'whohas <charactername>\n' +
         'whothefuckis <charactername>```\n';
     bot.postMessageToChannel(channel, msg, params);
 };
@@ -150,6 +154,34 @@ function whoTheFuckis(arg) {
                 $(results).each(function(i, elem) {
                     msg += '*' + $(elem).children('td').eq(0).text() + '*\n';
                     msg += $(elem).children('td').eq(1).text() + '\n';
+                });
+                bot.postMessageToChannel(channel, msg, params);
+            } else {
+                bot.postMessageToChannel(channel, '_No results. Hodor is case sensitive._', params);
+            }
+        }
+    });
+};
+
+
+/* Given a name returns who has that character. */
+function whoHas(arg) {
+    let msg = '_Hodor is thinking..._';
+    let URL = 'http://www.fantasizr.com/league/' + FantasizrID;
+    bot.postMessageToChannel(channel, msg, params);
+
+    request(URL, function(error, response, body) {
+        if (error) {
+            bot.postMessageToChannel(channel, error, params);
+        } else {
+            let $ = cheerio.load(body);
+            let msg = '';
+            let results = $('#drafthistory table a:contains("'+arg+'")').parents('tr');
+            if (results.length != 0) {
+                $(results).each(function(i, elem) {
+                    msg += '*' + $(elem).children('td').eq(1).text().trim() + '*\n';
+                    msg += $(elem).children('td').eq(2).text().trim() + '\n';
+                    console.log(msg);
                 });
                 bot.postMessageToChannel(channel, msg, params);
             } else {
