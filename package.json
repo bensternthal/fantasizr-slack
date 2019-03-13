@@ -11,13 +11,19 @@
     "node": ">= 6.0.X",
     "npm": ">= 1.2.x"
   },
+  "scripts": {
+    "test": "mocha"
+  },
   "author": "Benjamin Sternthal",
   "license": "MPL-2.0",
   "dependencies": {
+    "@google-cloud/language": "^2.0.1",
+    "chai": "^4.2.0",
     "cheerio": "^1.0.0-rc.2",
     "dotenv": "^4.0.0",
-    "request": "^2.81.0",
-    "slackbots": "^1.0.2"
+    "mocha": "^6.0.2",
+    "request": "^2.88.0",
+    "slackbots": "^1.2.0"
   },
   "devDependencies": {
     "eslint": "^3.19.0",
