@@ -1,20 +1,10 @@
 const fantasizer = require('../lib/fantasizer');
 const should = require('chai').should();
-const expect = require('chai').expect();
 const chaiAsPromised = require("chai-as-promised");
-const assert = require('assert');
 
 
 
-// getStandings,
-// getTeamRoster,
-// postTeamRoster,
-// whoTheFuckis,
-// whoHas,
-// getCharacterStats,
-//    bot.postMessageToChannel(channel, msg, params);
 
-//to include
 
 describe('getStandings()', function() {
     it('should return a string including "Cerseiously" ', async function() {
@@ -24,10 +14,11 @@ describe('getStandings()', function() {
 });
 
 
+// do this next
 describe('getTeamRoster()', function() {
     it('should return a string', async function() {
-        const foo =  await fantasizer.getStandings();
-        foo.should.be.a('string');
+        const result =  await fantasizer.getStandings();
+        result.should.be.a('string');
     });
 });
 
