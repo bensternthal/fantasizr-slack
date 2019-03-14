@@ -26,6 +26,10 @@ bot.on('error', (data) => {
     console.log(data);
 });
 
+/* Bot Stuff TODO
+    let msg = '_Hodor is thinking..._';
+    bot.postMessageToChannel(channel, msg, params);
+*/
 
 /* All the things hodor can do! */
 function processAction(action) {
