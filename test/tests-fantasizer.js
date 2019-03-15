@@ -23,7 +23,7 @@ describe('getTeamID()', function() {
 
 
 describe('getTeamRoster()', function() {
-    it('should return a string"', async function() {
+    it('should return a string', async function() {
         const result = await fantasizer.getTeamRoster('4566005129936896');
         result.should.be.a('string');
     });
@@ -39,9 +39,9 @@ describe('getWhoIs()', function() {
 
 describe('getWhoHas()', function() {
     this.timeout(5000);
-    it('should return a string containing "Hold The Doorr" when cersei is arg', async function() {
+    it('should return a string', async function() {
         const result = await fantasizer.getWhoHas('cersei');
-        result.should.be.a('string').that.does.include('Hold The Door');
+        result.should.be.a('string');
     });
 });
 
