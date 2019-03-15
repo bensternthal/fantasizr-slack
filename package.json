@@ -17,7 +17,6 @@
   "author": "Benjamin Sternthal",
   "license": "MPL-2.0",
   "dependencies": {
-    "@google-cloud/language": "^2.0.1",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "cheerio": "^1.0.0-rc.2",
