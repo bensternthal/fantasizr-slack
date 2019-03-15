@@ -12,6 +12,7 @@ describe('getStandings()', function() {
     });
 });
 
+
 describe('getTeamID()', function() {
     this.timeout(5000);
     it('should return an array', async function() {
@@ -19,6 +20,7 @@ describe('getTeamID()', function() {
         result.should.be.an('array');
     });
 });
+
 
 describe('getTeamRoster()', function() {
     it('should return a string"', async function() {
