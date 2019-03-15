@@ -3,6 +3,7 @@ const cheerio = require('cheerio');
 const request = require('request');
 const SlackBot = require('slackbots');
 const fantasizr = require('./lib/fantasizer');
+const cmds = require('./lib/text-commands');
 
 // Create & Configure Slackbot
 let bot = new SlackBot({
@@ -26,38 +27,43 @@ bot.on('error', (data) => {
     console.log(data);
 });
 
-/* Bot Stuff TODO
-    let msg = '_Hodor is thinking..._';
-    bot.postMessageToChannel(channel, msg, params);
-*/
-
 /* All the things hodor can do! */
-function processAction(action) {
+async function processAction(action) {
+    let msg = "";
+    postMessage("_*Hodor is thinking,...*_");
     switch (action.command) {
-        case 'help':
-            fantasizr.displayHelp();
+        case 'help': 
+            msg = await cmds.displayHelp();
             break;
         case 'standings':
-            fantasizr.getStandings();
+            msg = await fantasizr.getStandings();
             break;
         case 'whoison':
-            .getTeamRoster(action.arg);
+            let teamIDs = await fantasizr.getTeamID(action.arg);
+            for (let i = 0; i < teamIDs.length; i++) {
+                msg += "_*" + teamIDs[i][1] + "*_\n" + await fantasizr.getTeamRoster(teamIDs[i][0]);
+            }
             break;
-        case 'whothefuckis':
-            whoTheFuckis(action.arg);
+        case 'whois':
+            msg = await fantasizr.getWhoIs(action.arg);
             break;
         case 'whohas':
-            whoHas(action.arg);
-            break;
+            msg = await fantasizr.getWhoHas(action.arg);
+            break;        
         case 'stats':
-            getCharacterStats(action.arg);
-            break;
+            msg = await fantasizr.getCharacterStats(action.arg);
+            break;           
         case 'lastwords':
-            getLastWords();
+            msg =  cmds.getLastWords();
             break;
         default:
-            displayHelp();
-  };
+            msg = await cmds.displayHelp();
+    };
+    if (msg.length > 0) {
+        postMessage(msg);
+    } else {
+        postMessage('No results.');
+    }
 };
 
 /* [ 'booboobenny:', '@hodor', 'command', 'arg' ] */

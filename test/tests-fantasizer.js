@@ -17,8 +17,9 @@ describe('getStandings()', function() {
 });
 
 describe('getTeamID()', function() {
-    it('should return an array that includes 4566005129936896 for "Cerseiously"', async function() {
-        const result =  await fantasizer.getTeamID('Cerseiously');
+    this.timeout(5000);
+    it.only('should return an array that includes 4566005129936896 for "Cerseiously"', async function() {
+        const result =  await fantasizer.getTeamID('The');
         result.should.be.an('array').that.does.include('4566005129936896');
     });
 });

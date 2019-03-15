@@ -29,12 +29,14 @@ his name `@hodor`. Hodor is case sensitive. Hodor is a sensitive man.
 
 ## TODO
 
-* Refactor fantasizr code into a lib/module & add tests.
-* Figure out async await stuff when using request.  
+* Error handling
+
 * Is G a good solutio for parsing what people want, can we do something interesting if hodor does not know what to do?
 * Create lib with google code for entity analysis.
 * Create tests for google code. 
 *  ~~Get non fantasizer stuff out of fantasizer~~
+* ~Figure out async await stuff when using request. ~ 
+* ~Refactor fantasizr code into a lib/module & add tests.~
 
 
 
