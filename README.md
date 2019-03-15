@@ -19,24 +19,9 @@ Hodor is not very smart, but will respond to some basic commands. All commands a
 his name `@hodor`. Hodor is case sensitive. Hodor is a sensitive man.
 
 1. `@hodor help`
-1. `@hodor lastwords`
 1. `@hodor standings`
+1. `@hodor whois <Character Name>`
 1. `@hodor whoison <team name>`
 1. `@hodor whohas <Character Name>`
 1. `@hodor stats <Character Name>`
-1. `@hodor whothefuckis <Character Name>`
-
-
-## TODO
-
-* Error handling
-
-* Is G a good solutio for parsing what people want, can we do something interesting if hodor does not know what to do?
-* Create lib with google code for entity analysis.
-* Create tests for google code. 
-*  ~~Get non fantasizer stuff out of fantasizer~~
-* ~Figure out async await stuff when using request. ~ 
-* ~Refactor fantasizr code into a lib/module & add tests.~
-
-
-
+1. `@hodor lastwords`

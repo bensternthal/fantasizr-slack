@@ -11,6 +11,6 @@ describe('getLastWords()', function() {
 
 describe('displayHelp()', function() {
     it('should return a string that includes "Hodor Commands"', function() {
-        command.displayHelp().should.be.a('string').that.does.include('Hodor Commands');
+        command.displayHelp().should.be.a('string').that.does.include('@hodor help');
     });
 });
