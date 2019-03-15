@@ -2,7 +2,7 @@
 
 ![Hodor](/hodor.png)
 
-**Hodor** is a simple slack bot to display various stats from the website fantasizr. http://www.fantasizr.com
+**Hodor** is a simple slack bot to display various stats for the Game of Thrones fantasy game from the website fantasizr. http://www.fantasizr.com
 
 
 ## Install
