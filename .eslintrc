@@ -9,7 +9,7 @@
   },
   "rules": {
     "max-len": [1, 120, 2, {ignoreComments: true}],
-    "indent": ["error", 4],
+    "indent": ["error", 2],
     "no-unused-vars": [1, {"vars": "local", "args": "none"}],
     "no-multiple-empty-lines": 0,
     "require-jsdoc": ["warn", {
