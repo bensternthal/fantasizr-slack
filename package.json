@@ -8,8 +8,8 @@
   },
   "main": "app.js",
   "engines": {
-    "node": "^11.10.X",
-    "npm": "^6.7.X"
+    "node": "10.x.x",
+    "npm": "^6.7.x"
   },
   "scripts": {
     "test": "mocha"
